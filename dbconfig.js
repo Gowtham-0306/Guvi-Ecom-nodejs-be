@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
 // const mongodbURI = "mongodb://localhost:27017/FSD";
-const mongodbURI = "mongodb+srv://gowthamravichandran58:password%40123@tasttracker.do75nlm.mongodb.net/taskmanager";
+const mongodbURI = "mongodb+srv://gowthamravichandran58:password%40123@tasttracker.do75nlm.mongodb.net/portfolio";
 
 function DBconnection() {
 

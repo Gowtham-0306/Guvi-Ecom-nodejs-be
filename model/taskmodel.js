@@ -4,10 +4,12 @@ const mongoose = require("mongoose");
 const userRegistrationSchema = mongoose.Schema({
 
 
-Username : {type : String  , required : true  , unique : true} ,
+Username : {type : String  , required : true  , unique : false} ,
 password : {type : String , required : true},
-email : { type : String , required : true , unique : true} ,
-phonenumber : {type : Number , default : 0}
+email : { type : String , required : true , unique : false} ,
+phonenumber : {type : Number , default : 0},
+areyouadmin :{type : Boolean , default : false },
+usercart : {type : Array , default : [1,2] }
 
 
     
@@ -16,14 +18,14 @@ phonenumber : {type : Number , default : 0}
 );
 
 
+const productdetailschema = mongoose.Schema({
 
-const taskdetailsschema = mongoose.Schema({
 
-
-    taskname : {type : String  , required : true  } ,
-    taskdesc : {type : String , required : true},
-    taskstatus: {type : String , required : false ,  default: "" },
-    taskcatogery :{ type : String , required : true } ,
+    productname : {type : String  , required : true  } ,
+    productdescription : {type : String , required : true},
+    productprice: {type : Number , required : true ,  default: 0 },
+    productrating :{ type : Number , required : false , default : 0 } ,
+    imageurl :{ type : String , required : false , default : "" } ,
     
      
         
@@ -33,13 +35,28 @@ const taskdetailsschema = mongoose.Schema({
 
 
 
+ 
+    const cartdetailschema = mongoose.Schema({
+
+
+        productname : {type : Array  , required : true  } ,
+     
+        
+         
+             
+        },
+        {timestamps : true}
+        );
 
 
 
 
 
-const UserRegistrationModel = mongoose.model("userRegistrations" , userRegistrationSchema);
-const taskdetailsmodel = mongoose.model("taskdetails" , taskdetailsschema);
+const UserRegistrationModel = mongoose.model("userregistrations" , userRegistrationSchema);
+const productdetailsmodel = mongoose.model("productdetails" , productdetailschema);
+const cartdetailsmodel = mongoose.model("cartdetails" , cartdetailschema);
 
-module.exports = { UserRegistrationModel , taskdetailsmodel
+
+module.exports = { UserRegistrationModel ,
+    productdetailsmodel , cartdetailsmodel
 };

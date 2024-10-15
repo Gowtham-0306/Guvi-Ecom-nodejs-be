@@ -10,6 +10,7 @@ const express = require("express")
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bodyparser = require("body-parser");
+const razorpay = require('razorpay');
 const cors = require("cors")
 const {
   DBconnection
@@ -17,10 +18,12 @@ const {
 const {
   log
 } = require("node:console");
+const Razorpay = require("razorpay");
 const httpserver = express();
 // DBconnection();
 httpserver.use(bodyparser.json());
 httpserver.use(cors());
+httpserver.use(express.urlencoded({extended : false}));
 
 DBconnection();
 //  httpserver.use("/" , require("./controllers/taskcontroller"))
@@ -372,11 +375,70 @@ httpserver.post("/login:userid", async (req, res) => {
 
 
 
+//razorpay1
+
+
+httpserver.post('/order', async (req, res) => {
+ 
+const razorpay = new Razorpay({
+
+key_id : process.env.RAZORPAY_KEY_ID,
+key_secret : process.env.RAZORPAY_SECRET
+
+
+});
+
+const options = req.body;
+const order = await razorpay.orders.create(options);
+
+if(order){
+
+  res.json(order);
+
+
+
+}
+else{
+
+  return res.status(500).send("Error");
+}
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // starts a simple http server locally on port 3000
-httpserver.listen(process.env.PORT, process.env.HOSTNAME, () => {
+// httpserver.listen(process.env.PORT, process.env.HOSTNAME, () => {
+//   console.log('Listening on 127.0.0.1:3000');
+// });
+
+
+
+httpserver.listen(3000, '127.0.0.1', () => {
   console.log('Listening on 127.0.0.1:3000');
 });
-
 // run with `node server.mjs`
